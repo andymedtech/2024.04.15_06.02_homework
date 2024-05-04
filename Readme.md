@@ -17,33 +17,82 @@
 ## Домашняя работа
 
 0.  Предварительно установить Vue приложение (npm create vue@latest)
-    >     npm create vue@latest
-    >     npm install
+
+```
+>     npm create vue@latest
+>     npm install
+```
+    
 1.  Создайте в рабочей папке с frontend-проектом папку docker
-    >     mkdir docker
+
+```
+>     mkdir docker
+```
+
 2.  Внутри папки docker создать Dockerfile
-    >     cd docker
-    >     touch Dockerfile
+
+```
+>     cd docker
+>     touch Dockerfile 
+```
+
 3.  Выбрать базовый образ, который подойдёт для сборки приложения
-    "docker pull node"
-    https://hub.docker.com/_/node
-    FROM node:22-alpine3.18 as build
+
+```
+"docker pull node"
+https://hub.docker.com/_/node
+```
+
+```
+FROM node:22-alpine3.18 as build
+```
+
 4.  Скопировать всё необходимое внутрь контейнера
-    WORKDIR /app
-    COPY . .
+
+```
+WORKDIR /app
+COPY . .
+```
+
 5.  Запустить необходимые для сборки команды в контейнере
-    Добавил текст в App.vue для проверки - "GREAT TEST"
-    RUN npm install
-    RUN npm run build
+
+```
+Добавил текст в App.vue для проверки - "GREAT TEST"
+```
+
+```
+RUN npm install
+RUN npm run build
+```
+
 6.  Описать в докер файле все запущенные команды
-    прописано в Dickerfile
+
+```
+прописано в Dickerfile
+```
+
 7.  Результат выполнения сборки (артефакт) передать в образ Nginx
-    FROM nginx:1.25.5
-    COPY --from=build ./app/dist ./usr/share/nginx/html
+
+```
+FROM nginx:1.25.5
+COPY --from=build ./app/dist ./usr/share/nginx/html
+```
+
 8.  Разместить артефакт внутри образа так, чтобы при обращении по адресу 127.0.0.1:80 внутри контейнера, возвращался index.html из артефакта. При необходимости внести изменения/добавить конфигурационные файлы в исходный код проекта.
+
+```
     EXPOSE 80
+```
+
 9.  Запустить контейнер на основе образа на порту 28080
-    >     docker build -f ./docker/Dockerfile -t node_vue .
-    >     docker run -p 28080:80 node_vue
+
+```
+>     docker build -f ./docker/Dockerfile -t node_vue .
+>     docker run -p 28080:80 node_vue
+```
+
 10. Обратиться по адресу http://127.0.0.1:28080 с локальной машины
-    http://127.0.0.1:28080
+
+```
+http://127.0.0.1:28080
+```
